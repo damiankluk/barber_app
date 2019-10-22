@@ -14,4 +14,4 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/calendar/{date?}', 'CalendarController@index');
+Route::get('/events/{date?}', 'EventController@index');
