@@ -42,11 +42,11 @@ class EventController extends Controller
         return $event;
     }
 
-    public function store(Request $request, EventRepository $eventRepository)
+    public function store(Request $request)
     {
-        $validator = Validator::validate($request->all(), [
-            'start' => ['required|datetime|before:end', new EventOverlaps($request->get('end'))],
-            'end' => ['required|datetime', new EventDuration($request->get('start'))]
+        $validator = Validator::make($request->all(), [
+            'start' => ['required', 'date', 'before:end', new EventOverlaps($request->get('end'))],
+            'end' => ['required', 'date', new EventDuration($request->get('start'))]
         ]);
 
         if ($validator->fails()) {
@@ -60,9 +60,9 @@ class EventController extends Controller
 
     public function update(Request $request, Event $event)
     {
-        $validator = Validator::validate($request->all(), [
-            'start' => ['required|datetime', new EventOverlaps($request->get('end'))],
-            'end' => ['required|datetime', new EventDuration($request->get('start'))]
+        $validator = Validator::make($request->all(), [
+            'start' => ['required', 'date', 'before:end', new EventOverlaps($request->get('end'))],
+            'end' => ['required', 'date', new EventDuration($request->get('start'))]
         ]);
 
         if ($validator->fails()) {

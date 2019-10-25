@@ -27,7 +27,7 @@ class EventOverlaps implements Rule
 
         $events = $eventRepository->getByDate($value, $this->end);
 
-        return empty($events);
+        return $events->isEmpty();
     }
 
     /**
